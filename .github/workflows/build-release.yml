@@ -33,7 +33,9 @@ jobs:
 
       - name: Prepare Cache Key
         id: cache_key
-        run: echo "::set-output name=timestamp::$(date +"%s")"
+        # Changed from deprecated ::set-output to $GITHUB_OUTPUT environment file
+        # See: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+        run: echo "timestamp=$(date +"%s")" >> $GITHUB_OUTPUT
 
       - name: Setup Cache
         uses: actions/cache@v4
