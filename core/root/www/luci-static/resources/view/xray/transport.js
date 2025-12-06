@@ -208,6 +208,27 @@ function transport_splithttp(transport, sub_section, tab_name) {
     splithttp_path.modalonly = true;
 }
 
+function transport_xhttp(transport, sub_section, tab_name) {
+    transport.value("xhttp", "XHTTP");
+
+    let xhttp_path = sub_section.taboption(tab_name, form.Value, "xhttp_path", _("[xhttp] Path"));
+    xhttp_path.depends("transport", "xhttp");
+    xhttp_path.modalonly = true;
+
+    let xhttp_host = sub_section.taboption(tab_name, form.Value, "xhttp_host", _("[xhttp] Host"));
+    xhttp_host.depends("transport", "xhttp");
+    xhttp_host.modalonly = true;
+
+    let xhttp_mode = sub_section.taboption(tab_name, form.ListValue, "xhttp_mode", _("[xhttp] Mode"));
+    xhttp_mode.depends("transport", "xhttp");
+    xhttp_mode.value("auto", "auto");
+    xhttp_mode.value("packet-up", "packet-up");
+    xhttp_mode.value("stream-up", "stream-up");
+    xhttp_mode.value("stream-one", "stream-one");
+    xhttp_mode.default = "auto";
+    xhttp_mode.modalonly = true;
+}
+
 return baseclass.extend({
     init: function (transport, sub_section, tab_name) {
         transport_tcp(transport, sub_section, tab_name);
@@ -218,5 +239,6 @@ return baseclass.extend({
         transport_grpc(transport, sub_section, tab_name);
         transport_splithttp(transport, sub_section, tab_name);
         transport_httpupgrade(transport, sub_section, tab_name);
+        transport_xhttp(transport, sub_section, tab_name);
     }
 });
