@@ -151,6 +151,17 @@ function stream_httpupgrade(server) {
     return null;
 }
 
+function stream_xhttp(server) {
+    if (server["transport"] == "xhttp") {
+        return {
+            path: server["xhttp_path"],
+            host: server["xhttp_host"],
+            mode: server["xhttp_mode"] || "auto",
+        };
+    }
+    return null;
+}
+
 export function port_array(i) {
     if (type(i) === 'array') {
         return map(i, v => int(v));
@@ -191,7 +202,8 @@ export function stream_settings(server, protocol, tag) {
             grpcSettings: stream_grpc(server),
             httpSettings: stream_h2(server),
             splithttpSettings: stream_splithttp(server),
-            httpupgradeSettings: stream_httpupgrade(server)
+            httpupgradeSettings: stream_httpupgrade(server),
+            xhttpSettings: stream_xhttp(server)
         },
         dialer_proxy: dialer_proxy
     };
